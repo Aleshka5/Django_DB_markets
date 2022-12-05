@@ -70,18 +70,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'M_Network.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+db_name = 'railway'
+db_user = 'postgres'
+db_pswrd = 'xhY0PtShlwJ64lNzN5zl'
+db_host = 'safas'
+db_prot = '5804'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': '2y0deFkONayaoopg32T5',
-        'HOST': 'containers-us-west-41.railway.app',
-        'PORT': '7662',
+        'NAME': db_name,
+        'USER': db_user,
+        'PASSWORD': db_pswrd,
+        'HOST': db_host,
+        'PORT': db_prot,
     }
 }
 

@@ -9,8 +9,10 @@ class Clients(models.Model):
     i = models.CharField(max_length=50)
     o = models.CharField(max_length=50)
     age = models.DateField()
-    phone = models.CharField(max_length=11)
+    phone = models.CharField(max_length=12)
     pswrd = models.CharField(max_length=30)
+    def __str__(self):
+        return (self.f+' '+self.i+' '+self.o)
 
 class Managers(models.Model):
     zp = models.IntegerField()
@@ -30,6 +32,8 @@ class Markets(models.Model):
 class Products(models.Model):
     product_name = models.CharField(max_length=40)
     price = models.FloatField()
+    def __str__(self):
+        return self.product_name
 
 class Reps_prods(models.Model):
     rep_id = models.ForeignKey(Reps, on_delete=models.CASCADE)
