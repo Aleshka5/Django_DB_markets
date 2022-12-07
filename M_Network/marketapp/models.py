@@ -1,14 +1,14 @@
 from django.db import models
-
+from usersapp.models import Shopper
 # Create your models here.
-from django.db import models
+
 
 # Create your models here.
 class Clients(models.Model):
     f = models.CharField(max_length=50)
     i = models.CharField(max_length=50)
     o = models.CharField(max_length=50)
-    age = models.DateField()
+    age = models.DateField(null=True,blank=True)
     phone = models.CharField(max_length=12)
     pswrd = models.CharField(max_length=30)
     def __str__(self):
@@ -46,14 +46,14 @@ class Markets_prods(models.Model):
     count = models.IntegerField()
 
 class Clients_prods(models.Model):
-    client_id = models.ForeignKey(Clients, on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Shopper, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Products, on_delete=models.CASCADE)
     market_id = models.ForeignKey(Markets, on_delete=models.CASCADE)
     pay = models.IntegerField()
     count = models.IntegerField()
 
 class Clients_orders(models.Model):
-    client_id = models.ForeignKey(Clients, on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Shopper, on_delete=models.CASCADE)
     order_info = models.TextField()
 
 class Orders_prods(models.Model):

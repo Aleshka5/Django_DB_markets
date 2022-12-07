@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'marketapp'
+    'marketapp',
+    'usersapp'
 ]
 
 MIDDLEWARE = [
@@ -74,9 +75,9 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'PEAfPLsaRccJ3TosrvVx'
-db_host = 'containers-us-west-157.railway.app'
-db_port = '6248'
+db_pswrd = 'bjP8nzCNQDhjrcWiyeIq'
+db_host = 'containers-us-west-139.railway.app'
+db_port = '6116'
 
 DATABASES = {
     'default': {
@@ -129,3 +130,13 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+
+# Переназначение модели юзера
+AUTH_USER_MODEL = 'usersapp.Shopper'
+# Переходы
+# Куда идти после логина
+LOGIN_REDIRECT_URL = '/'
+# Куда идти после выхода
+LOGOUT_REDIRECT_URL = '/'
+# Куда идти на логин
+LOGIN_URL = '/users/login/'
