@@ -4,7 +4,6 @@ from M_Network import settings
 import psycopg2
 class Command(BaseCommand):
     def handle(self,*args,**options):
-        return None
         Clients.objects.all().delete()
         Managers.objects.all().delete()
         Top_managers.objects.all().delete()
@@ -17,14 +16,14 @@ class Command(BaseCommand):
         #Orders_prods.objects.all().delete()
 
         # Главные таблицы
-        Clients.objects.create(id = 1, f='Ivanov',i='Ivan',o='Ivanovich',age='2000-03-05',phone='89138472233',pswrd='2468')
-        Managers.objects.create(id = 1, zp=40000,pswrd='MN-123')
-        Top_managers.objects.create(id = 1, zp=70000,pswrd='TMN-123')
+        Clients.objects.create(f='Ivanov',i='Ivan',o='Ivanovich',age='2000-03-05',phone='89138472233',pswrd='2468')
+        Managers.objects.create(zp=40000,pswrd='MN-123')
+        Top_managers.objects.create(zp=70000,pswrd='TMN-123')
         # Главно-Дочерние Таблицы
-        Reps.objects.create(id = 1, top_manager_id = Top_managers.objects.get(id = 1))
-        Markets.objects.create(id = 1, manager_id = Managers.objects.get(id = 1),id_rep = Reps.objects.get(id = 1))
-        Products.objects.create(id = 1, product_name = 'PS4 Slim',price = 35000)
-        Products.objects.create(id = 2, product_name='PS5', price=70000)
+        Reps.objects.create(top_manager_id = Top_managers.objects.get(id = 1))
+        Markets.objects.create(manager_id = Managers.objects.get(id = 1),id_rep = Reps.objects.get(id = 1))
+        Products.objects.create(product_name = 'PS4 Slim',price = 35000)
+        Products.objects.create(product_name='PS5', price=70000)
         # Много ко многим
         Reps_prods.objects.create(rep_id = Reps.objects.get(id = 1), prod_id = Products.objects.get(id = 1), count = 4)
         Markets_prods.objects.create(market_id = Markets.objects.get(id = 1), prod_id = Products.objects.get(id = 2), count = 5)
