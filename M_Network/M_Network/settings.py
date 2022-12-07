@@ -55,7 +55,7 @@ ROOT_URLCONF = 'M_Network.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,9 +74,9 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'xhY0PtShlwJ64lNzN5zl'
-db_host = 'safas'
-db_prot = '5804'
+db_pswrd = 'PEAfPLsaRccJ3TosrvVx'
+db_host = 'containers-us-west-157.railway.app'
+db_port = '6248'
 
 DATABASES = {
     'default': {
@@ -85,7 +85,7 @@ DATABASES = {
         'USER': db_user,
         'PASSWORD': db_pswrd,
         'HOST': db_host,
-        'PORT': db_prot,
+        'PORT': db_port,
     }
 }
 
@@ -127,3 +127,5 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
