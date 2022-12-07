@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Info about product{% endblock %}
+
+{% block products_info %}
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <h2 class="post-title">{{ product_info.product_name }}</h2>
+                        <h3 class="post-subtitle">{{ product_info.price }}руб</h3>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">Start Bootstrap</a>
+                            on September 24, 2022
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                </div>
+            </div>
+{% endblock %}

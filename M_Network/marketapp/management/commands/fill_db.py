@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand
 from marketapp.models import Clients,Managers,Top_managers,Reps,Markets,Products,Reps_prods,Markets_prods,Clients_prods,Clients_orders,Orders_prods
+from M_Network import settings
 import psycopg2
 class Command(BaseCommand):
     def handle(self,*args,**options):
+        return None
         Clients.objects.all().delete()
         Managers.objects.all().delete()
         Top_managers.objects.all().delete()
@@ -30,27 +32,33 @@ class Command(BaseCommand):
         #Clients_orders.objects.create()
         #Orders_prods.objects.create()
 
-        return None
+        #return None
         try:
             connection = psycopg2.connect(
-                host ='containers',
-                user ='postgres',
-                password ='xhY0PtShlwJ64lNzN5zl',
-                database ='railway',
-                port = '5804'
+                host =settings.db_host,
+                user =settings.db_user,
+                password =settings.db_pswrd,
+                database =settings.db_name,
+                port = settings.db_port
             )
             connection.autocommit = True
             with connection.cursor() as cursor:
+                #cursor.execute(
+                #    '''
+                #    CREATE OR REPLACE FUNCTION foo(in a int,in b int) returns int as
+                #    $$
+                #    BEGIN
+                #    RETURN a+b;
+                #    END;
+                #    $$ language plpgsql;
+                #    '''
+                #)
                 cursor.execute(
                     '''
-                    CREATE OR REPLACE FUNCTION foo(in a int,in b int) returns int as
-                    $$
-                    BEGIN
-                    RETURN a+b;
-                    END;
-                    $$ language plpgsql;
+                    SELECT * FROM marketapp_products
                     '''
                 )
+                print(cursor.fetchone())
                 #cursor.execute(
                 #    '''
                 #    INSERT INTO marketapp_products (product_name,price) values
