@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Techno Market{% endblock %}
+
+{% block products_info %}
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    {% for item in own_cart %}
+                    <div class="post-preview">
+                        <a href="{% url 'market:change_cart' product_id=item.product_id.id %}">
+                            <h2 class="post-title">{{ item.product_id.product_name }}</h2>
+                            <h3 class="post-subtitle">{{ item.product_id.price }}руб___________________________________________{{ item.count }}шт</h3>
+                        </a>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% endfor %}
+                    <!-- Pager-->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-end mb-4">
+                            <button type="submit" class="btn btn-primary text-uppercase" style="margin-right:40px">Купить</button>
+                            <a class="btn btn-primary text-uppercase" href="{% url 'market:index' %}">
+                                В магазин →
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

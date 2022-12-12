@@ -14,9 +14,16 @@
                             <a href="#!">Start Bootstrap</a>
                             on September 24, 2022
                         </p>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p}}
+                            <button type="submit" class="btn btn-primary text-uppercase">Купить</button>
+                        </form>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'market:index' %}">Отмена</a></div>
                 </div>
             </div>
 {% endblock %}

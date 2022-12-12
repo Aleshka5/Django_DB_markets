@@ -4,4 +4,4 @@ from .models import Shopper
 class RegistrationForm(UserCreationForm):
     class Meta():
         model = Shopper
-        fields = ('username','phone','f','i','o')
+        fields = ('username','first_name','last_name','phone','market_id')
