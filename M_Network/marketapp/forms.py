@@ -2,12 +2,17 @@ from django import forms
 from .models import Clients
 
 class RegForm(forms.ModelForm):
-    f = forms.CharField(label='Фамилия')
-    i = forms.CharField(label='Имя')
-    o = forms.CharField(label='Отчество')
+    last_name = forms.CharField(label='Фамилия')
+    first_name = forms.CharField(label='Имя')
     phone = forms.CharField(label='Номер телефона')
-    pswrd = forms.CharField(label='Пароль')
+    market_id = forms.CharField(label='Ближайший магазин')
     class Meta:
         model = Clients
         #fields = '__all__'
         exclude = ('age',)
+
+class Form_buy(forms.Form):
+    count = forms.IntegerField(label='Количество')
+
+class Form_change(forms.Form):
+    count = forms.IntegerField(label='Изменить количество')
