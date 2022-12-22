@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Market Orders{% endblock %}
+
+{% block products_info %}
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    {% for order in market_orders %}
+                    {% if order.client_id.market_id == user.market_id %}
+                    <div class="post-preview">
+                        <div style="display:flex; justify-content:space-between;">
+                            <h2 class="post-title">№{{ order.id }}</h2>
+                            <h2 class="post-title">{{ order.order_info }}</h2>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    {% endif %}
+                    {% endfor %}
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">К другим товарам →</a></div>
+                </div>
+            </div>
+{% endblock %}
