@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clients
+from .models import Clients, Markets_prods
 
 class RegForm(forms.ModelForm):
     last_name = forms.CharField(label='Фамилия')
@@ -10,6 +10,10 @@ class RegForm(forms.ModelForm):
         model = Clients
         #fields = '__all__'
         exclude = ('age',)
+
+class Add_form(forms.Form):
+    prod_id = forms.IntegerField(label='Индекс нового товара')
+    count = forms.IntegerField(label='Количество товара')
 
 class Form_buy(forms.Form):
     count = forms.IntegerField(label='Количество')
