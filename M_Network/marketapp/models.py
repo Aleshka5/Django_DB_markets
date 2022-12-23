@@ -52,6 +52,20 @@ class Clients_prods(models.Model):
     pay = models.IntegerField()
     count = models.IntegerField()
 
+    def change(self,count,user_id,product_id):
+        if count == 0:
+            client_product = Clients_prods.objects.get(client_id=user_id, product_id=product_id)
+            client_product.delete()
+            return 1
+        elif count > 0:
+            client_product = Clients_prods.objects.get(client_id=user_id, product_id=product_id)
+            client_product.count = count
+            client_product.save()
+            return 2
+        else:
+            return 0
+
+
 class Clients_orders(models.Model):
     client_id = models.ForeignKey(Shopper, on_delete=models.CASCADE)
     order_info = models.TextField()
