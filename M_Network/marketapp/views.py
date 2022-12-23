@@ -95,13 +95,9 @@ def change_cart(request,product_id):
         form = Form_change(request.POST)
         if form.is_valid():
             count = form.cleaned_data['count']
-            if count == 0:
-                client_product = Clients_prods.objects.get(client_id=request.user.id, product_id=product_id)
-                client_product.delete()
-            elif count > 0:
-                client_product = Clients_prods.objects.get(client_id=request.user.id, product_id=product_id)
-                client_product.count = count
-                client_product.save()
+
+            Clients_prods.change(count,request.user.id,product_id)
+
             return HttpResponseRedirect(reverse('market:cart'))
         else:
             return render(request, 'marketapp/change.html', context={'product_info': product, 'form': form})
@@ -133,16 +129,10 @@ def add_product(request):
 def client_orders(request):
     orders = Clients_orders.objects.filter(client_id_id = request.user.id)
     prods = Orders_prods.objects.all()
-    print(len(orders))
     for order,i in zip(orders,range(len(orders))):
         order.client_id.id = i+1
-    for i in prods:
-        print(i.order_id.id)
     return render(request, 'marketapp/client_orders.html', context={'client_orders': orders,'order_products':prods})
 
 def market_orders(request):
     orders = Clients_orders.objects.all()
-    for order in orders:
-        print(order.client_id.market_id)
-        print(request.user.market_id)
     return render(request, 'marketapp/orders_for_manager.html', context={'market_orders': orders})
