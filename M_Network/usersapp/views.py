@@ -6,6 +6,7 @@ from .models import Shopper
 
 # Create your views here.
 class UserLoginView(LoginView):
+    title = 'Вход'
     template_name = 'usersapp/login.html'
 
 class UserCreateView(CreateView):

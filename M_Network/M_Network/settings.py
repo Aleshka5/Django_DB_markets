@@ -75,9 +75,9 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'Crp0vkp87j0RoiOragWs'
-db_host = 'containers-us-west-73.railway.app'
-db_port = '5945'
+db_pswrd = 'TKKCPouLXqzXwHtnQEpB'
+db_host = 'containers-us-west-85.railway.app'
+db_port = '7091'
 
 DATABASES = {
     'default': {
