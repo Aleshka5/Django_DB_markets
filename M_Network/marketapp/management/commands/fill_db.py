@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from marketapp.models import Clients,Managers,Top_managers,Reps,Markets,Products,Reps_prods,Markets_prods,Clients_prods,Clients_orders,Orders_prods
-from usersapp.models import Shopper
+from usersapp.models import Shopper, Profile
 from M_Network import settings
 import psycopg2
 class Command(BaseCommand):
@@ -13,20 +13,34 @@ class Command(BaseCommand):
         Reps_prods.objects.all().delete()
         Markets_prods.objects.all().delete()
         Clients_prods.objects.all().delete()
+        Profile.objects.all().delete()
         #Clients_orders.objects.all().delete()
         #Orders_prods.objects.all().delete()
 
         # Главные таблицы
-        Managers.objects.create(zp=40000,pswrd='MN-123')
+        Managers.objects.create(id=1,zp=40000,pswrd='MN-123')
+        Managers.objects.create(id=2,zp=45000, pswrd='MN-124')
         Top_managers.objects.create(zp=70000,pswrd='TMN-123')
+        Shopper.objects.create_user(password='ytrewq123',username='Goga',first_name= 'Greg',last_name='Pupkin',market_id=1 )
+        Shopper.objects.create_user(password='ytrewq123', username='Boba',first_name= 'Tom', last_name='Bupkin', market_id=2)
+        Shopper.objects.create_user(password='ytrewq123', username='Hopa',first_name= 'Ley', last_name='Lupkin', market_id=1, is_staff=True)
+        Shopper.objects.create_user(password='ytrewq123', username='admin',first_name= 'Alex', last_name='Gupkin',is_superuser=True,is_staff=True,market_id=1)
         # Главно-Дочерние Таблицы
         Reps.objects.create(top_manager_id = Top_managers.objects.first())
-        Markets.objects.create(manager_id = Managers.objects.first(),id_rep = Reps.objects.first())
-        Products.objects.create(product_name = 'PS4 Slim',price = 35000)
-        Products.objects.create(product_name='PS5', price=70000)
+        Markets.objects.create(id=1,manager_id = Managers.objects.get(id=1),id_rep = Reps.objects.first())
+        Markets.objects.create(id=2,manager_id=Managers.objects.get(id=2), id_rep=Reps.objects.first())
+        Products.objects.create(id=1,product_name='PS4 Slim',price = 35000)
+        Products.objects.create(id=2,product_name='PS5', price=70000)
+        Products.objects.create(id=3,product_name='Клавиатура', price=7000)
+        Products.objects.create(id=4,product_name='Игровая мышь', price=3000)
+        Products.objects.create(id=5,product_name='XBox Series S', price=50000)
         # Много ко многим
-        Reps_prods.objects.create(rep_id = Reps.objects.first(), prod_id = Products.objects.get(product_name='PS5'), count = 4)
-        Markets_prods.objects.create(market_id = Markets.objects.first(), prod_id = Products.objects.get(product_name='PS4 Slim'), count = 5)
+        Reps_prods.objects.create(rep_id = Reps.objects.first(), prod_id = Products.objects.get(product_name='PS5'), count = 20)
+        Markets_prods.objects.create(market_id=Markets.objects.get(id=1),prod_id=Products.objects.get(product_name='PS5'), count=10)
+        Markets_prods.objects.create(market_id=Markets.objects.get(id=1),prod_id=Products.objects.get(product_name='PS4 Slim'), count = 10)
+        Markets_prods.objects.create(market_id=Markets.objects.get(id=1),prod_id=Products.objects.get(product_name='Игровая мышь'), count=15)
+        Markets_prods.objects.create(market_id=Markets.objects.get(id=2),prod_id=Products.objects.get(product_name='PS4 Slim'), count=12)
+        Markets_prods.objects.create(market_id=Markets.objects.get(id=2),prod_id=Products.objects.get(product_name='XBox Series S'), count=15)
         #Clients_orders.objects.create()
         #Orders_prods.objects.create()
         try:
@@ -48,6 +62,7 @@ class Command(BaseCommand):
                     count_products_in_market int;
                     count_prods int;
                     cur_prod_id int;
+                    cur_market_id int;
                     buy_market_id int;
                     buy_client_id int;
                     last_order_id int;
@@ -56,9 +71,9 @@ class Command(BaseCommand):
                     begin
                     
                     -- Проверка
-                    for count_prods, cur_prod_id in select count,product_id_id from marketapp_clients_prods where client_id_id = client_buy_id
+                    for count_prods, cur_prod_id, cur_market_id in select count,product_id_id,market_id_id from marketapp_clients_prods where client_id_id = client_buy_id
                     loop 
-                        count_products_in_market = count from marketapp_markets_prods where prod_id_id = cur_prod_id;
+                        count_products_in_market = count from marketapp_markets_prods where prod_id_id = cur_prod_id and market_id_id = cur_market_id;
                         if count_prods > count_products_in_market then
                             raise exception 'There is no product available in the store. In market: ""%"" < Cilent query: ""%""', count_products_in_market,count_prods;
                             return;

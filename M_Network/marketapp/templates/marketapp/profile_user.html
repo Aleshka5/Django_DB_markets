@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block products_info %}
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-10">
+                    <!-- Post preview-->
+                    {% if user.is_staff == True %}
+                    <h2 class="post-title">Менеджер</h2>
+                    {% endif %}
+                    {% if user.is_superuser == True %}
+                    <h2 class="post-title">Топ менеджер</h2>
+                    {% endif %}
+                    {% if user.is_staff == False and user.is_superuser == False %}
+                    <h2 class="post-title">Добрый день,</h2>
+                    {% endif %}
+
+                    <h2 class="post-title">{{user.first_name|title}} {{user.last_name|title}}</h2>
+                    {% if user.age != None %}
+                    <div class="post-preview" style="display:flex;justify-content:center;">
+                        <div>
+                            <p class="post-subtitle" style="margin:30px">Дата рожедения:{{user.age}}</p>
+                            {% else %}
+                            <p class="post-subtitle" style="margin:30px">Дата рожедения: _________</p>
+                            {% endif %}
+                            {% if address != None %}
+                            <p class="post-subtitle" style="margin:30px;">Адрес:{{address}}</p>
+                            {% else %}
+                            <p class="post-subtitle" style="margin:30px;transform:translate(0,280px)">Адрес: __________</p>
+                            {% endif %}
+                            {% if user.phone != None %}
+                            <p class="post-subtitle" style="margin:30px;transform:translate(0,290px)">Телефон:{{user.phone}}</p>
+                            {% else %}
+                            <p class="post-subtitle" style="margin:30px;transform:translate(0,290px)">Телефон: __________</p>
+                            {% endif %}
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary text-uppercase">Изменить введённые поля</button>
+                        </form>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                </div>
+            </div>
+{% endblock %}

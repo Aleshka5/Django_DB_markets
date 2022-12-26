@@ -20,3 +20,8 @@ class Form_buy(forms.Form):
 
 class Form_change(forms.Form):
     count = forms.IntegerField(label='Изменить количество')
+
+class Form_profile(forms.Form):
+    age = forms.DateField(label='Дата рождения', widget=forms.DateInput(attrs={'placeholder': 'DD.MM.YYYY'}))
+    address = forms.CharField(label='Адрес', widget=forms.Textarea(attrs={'placeholder': 'Ваш адрес'}))
+    phone = forms.CharField(label='Телефон',widget=forms.TextInput(attrs={'placeholder':'Ваш номер телефона'}))
