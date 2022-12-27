@@ -2,6 +2,7 @@ import psycopg2
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import RegForm, Form_buy, Form_change, Add_form, Form_profile
 from .models import Products, Markets_prods, Clients_prods, Markets, Clients_orders, Orders_prods
@@ -68,7 +69,7 @@ def product_buy(request,product_id,market_id):
             else:
                 return render(request, 'marketapp/product_buy.html', context={'product_info': product, 'form': form,'title':title})
         else:
-            form = Form_buy(request.POST)
+            form = Form_buy()
             return render(request,'marketapp/product_buy.html',context = {'product_info':product,'form':form,'title':title})
     else:
         title = 'Редактирование'
@@ -88,7 +89,7 @@ def product_buy(request,product_id,market_id):
             else:
                 return render(request, 'marketapp/product_buy.html', context={'product_info': product, 'form': form,'title':title})
         else:
-            form = Form_buy(request.POST)
+            form = Form_change()
             return render(request, 'marketapp/product_buy.html', context={'product_info': product, 'form': form,'title':title})
 
 def shopping_cart(request):
@@ -112,6 +113,25 @@ def shopping_cart(request):
             print('Error while working with PostgreSQL', _ex)
         finally:
             return HttpResponseRedirect(reverse('market:cart'))
+
+@user_passes_test(lambda user: user.profile.delivery_enable,login_url='/profile/')
+def by_with_delivery(request):
+    try:
+        connection = psycopg2.connect(
+            host=settings.db_host,
+            user=settings.db_user,
+            password=settings.db_pswrd,
+            database=settings.db_name,
+            port=settings.db_port
+        )
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            cursor.execute(f'call client_buy_own_shopping_cart_products({request.user.id})')
+    except Exception as _ex:
+        print('Error while working with PostgreSQL', _ex)
+    finally:
+        return render(request, 'marketapp/buy_delivery.html')
+
 
 def change_cart(request,product_id):
     title = 'Редактирование'

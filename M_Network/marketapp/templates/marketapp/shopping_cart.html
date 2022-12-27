@@ -17,15 +17,22 @@
                     <hr class="my-4" />
                     {% endfor %}
                     <!-- Pager-->
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="d-flex justify-content-end mb-4">
-                            <button type="submit" class="btn btn-primary text-uppercase" style="margin-right:40px">Купить</button>
-                            <a class="btn btn-primary text-uppercase" href="{% url 'market:index' %}">
-                                В магазин →
-                            </a>
-                        </div>
-                    </form>
+                    <div style="display:flex;justify-content:right;">
+                        <form action="{% url 'market:delivery' %}">
+                            <div class="d-flex justify-content-end mb-4">
+                                <button type="submit" class="btn btn-primary text-uppercase" style="margin-right:40px">Купить с доставкой</button>
+                            </div>
+                        </form>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-end mb-4">
+                                <button type="submit" class="btn btn-primary text-uppercase" style="margin-right:40px">Купить</button>
+                                <a class="btn btn-primary text-uppercase" href="{% url 'market:index' %}">
+                                    В магазин →
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 {% endblock %}
