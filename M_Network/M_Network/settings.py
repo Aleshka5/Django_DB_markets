@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'marketapp',
     'usersapp'
 ]
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'M_Network.urls'
@@ -75,9 +77,9 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'TKKCPouLXqzXwHtnQEpB'
-db_host = 'containers-us-west-85.railway.app'
-db_port = '7091'
+db_pswrd = 'OncRnArkF4iM9wUgbBpl'
+db_host = 'containers-us-west-117.railway.app'
+db_port = '6524'
 
 DATABASES = {
     'default': {
@@ -140,3 +142,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # Куда идти на логин
 LOGIN_URL = '/users/login/'
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+# to django-debug-toolbar
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]

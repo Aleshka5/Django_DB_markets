@@ -17,9 +17,9 @@
                     {% endif %}
 
                     <h2 class="post-title">{{user.first_name|title}} {{user.last_name|title}}</h2>
-                    {% if user.age != None %}
                     <div class="post-preview" style="display:flex;justify-content:center;">
                         <div>
+                            {% if user.age != None %}
                             <p class="post-subtitle" style="margin:30px">Дата рожедения:{{user.age}}</p>
                             {% else %}
                             <p class="post-subtitle" style="margin:30px">Дата рожедения: _________</p>
