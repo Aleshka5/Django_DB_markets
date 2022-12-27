@@ -32,6 +32,11 @@ class Markets(models.Model):
 class Products(models.Model):
     product_name = models.CharField(max_length=40)
     price = models.FloatField()
+
+    def get_all(self):
+        all = Products.objects.all()
+        return all
+
     def __str__(self):
         return self.product_name
 
@@ -44,6 +49,10 @@ class Markets_prods(models.Model):
     market_id = models.ForeignKey(Markets, on_delete=models.CASCADE)
     prod_id = models.ForeignKey(Products, on_delete=models.CASCADE)
     count = models.IntegerField()
+
+    def get_all(self):
+        all = Markets_prods.objects.all()
+        return all
 
 class Clients_prods(models.Model):
     client_id = models.ForeignKey(Shopper, on_delete=models.CASCADE)

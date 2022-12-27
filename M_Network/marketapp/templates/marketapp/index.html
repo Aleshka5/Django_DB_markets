@@ -6,59 +6,39 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-10">
                     <!-- Post preview-->
-                    {% if user.is_authenticated %}
-                    {% for item in markets %}
-                    {% if item.market_id.id == user.market_id %}
-                    <div class="post-preview">
-                        <a href="{% url 'market:product_buy' product_id=item.prod_id.id market_id=user.market_id %}">
-                            <h2 class="post-title">{{ item.prod_id.product_name }}</h2>
-                            <h3 class="post-subtitle">{{ item.prod_id.price }}руб___________________________________________{{ item.count }}шт</h3>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    {% endif %}
-                    {% endfor %}
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-space-between mb-4" style="justify-content:space-between;">
-                        {% if markets.has_previous %}
-                            <a class="btn btn-primary text-uppercase" href="?page={{ markets.previous_page_number }}"><На предыдущую страницу</a>
+                        {% if user.is_authenticated %}
+                            {% for item in assortiment %}
+                                <div class="post-preview">
+                                    <a href="{% url 'market:product_buy' product_id=item.prod_id.id market_id=user.market_id %}">
+                                        <h2 class="post-title">{{ item.prod_id.product_name }}</h2>
+                                        <h3 class="post-subtitle">{{ item.prod_id.price }}руб___________________________________________{{ item.count }}шт</h3>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for item in assortiment %}
+                                <div class="post-preview">
+                                    <a href="{% url 'market:product' id=item.id %}">
+                                        <h2 class="post-title">{{ item.product_name }}</h2>
+                                        <h3 class="post-subtitle">{{ item.price }}руб</h3>
+                                    </a>
+                                </div>
+                            {% endfor %}
                         {% endif %}
-                        <span>
-                            Страница {{markets.number}} из {{markets.paginator.num_pages}}.
-                        </span>
-                        {% if markets.has_next %}
-                            <a class="btn btn-primary text-uppercase" href="?page={{ markets.next_page_number }}">На следующую страницу></a>
-                        {% endif %}
-                    </div>
-                    {% else %}
-                    {% for item in products %}
-                    <div class="post-preview">
-                        <a href="{% url 'market:product' id=item.id %}">
-                            <h2 class="post-title">{{ item.product_name }}</h2>
-                            <h3 class="post-subtitle">{{ item.price }}</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2022
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    {% endfor %}
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-space-between mb-4" style="justify-content:space-between;">
-                        {% if products.has_previous %}
-                            <a class="btn btn-primary text-uppercase" href="?page={{ products.previous_page_number }}"><На предыдущую страницу</a>
-                        {% endif %}
-                        <span>
-                            Страница {{products.number}} из {{products.paginator.num_pages}}.
-                        </span>
-                        {% if products.has_next %}
-                            <a class="btn btn-primary text-uppercase" href="?page={{ products.next_page_number }}">На следующую страницу></a>
-                        {% endif %}
-                    </div>
-                    {% endif %}
+                        <hr class="my-4" />
+                        <!-- Pager-->
+                        <div class="d-flex justify-content-space-between mb-4" style="justify-content:space-between;">
+                            {% if assortiment.has_previous %}
+                                <a class="btn btn-primary text-uppercase" href="?page={{ assortiment.previous_page_number }}"><На предыдущую страницу</a>
+                            {% endif %}
+                            <span>
+                                Страница {{assortiment.number}} из {{assortiment.paginator.num_pages}}.
+                            </span>
+                            {% if assortiment.has_next %}
+                                <a class="btn btn-primary text-uppercase" href="?page={{ assortiment.next_page_number }}">На следующую страницу></a>
+                            {% endif %}
+                        </div>
+                        <hr class="my-4" />
                 </div>
             </div>
 {% endblock %}
