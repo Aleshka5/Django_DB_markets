@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'marketapp',
-    'usersapp'
+    'usersapp',
+    'rest_framework',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
@@ -77,20 +79,35 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'OncRnArkF4iM9wUgbBpl'
-db_host = 'containers-us-west-117.railway.app'
-db_port = '6524'
+db_pswrd = 'SOWI5pffo38wLo005vJu'
+db_host = 'containers-us-west-57.railway.app'
+db_port = '7405'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': db_name,
-        'USER': db_user,
-        'PASSWORD': db_pswrd,
-        'HOST': db_host,
-        'PORT': db_port,
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': db_name,
+         'USER': db_user,
+         'PASSWORD': db_pswrd,
+         'HOST': db_host,
+         'PORT': db_port,
+     }
 }
+
+#DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
+
+    #'default': {
+    #    'NAME': 'sitedb',
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'USER': 'django',
+    #    'PASSWORD': 'nu123456',
+    #    'HOST': 'localhost'
+    #}
+#}
 
 
 # Password validation
@@ -151,3 +168,12 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+

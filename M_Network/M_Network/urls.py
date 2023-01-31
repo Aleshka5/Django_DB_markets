@@ -16,11 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from rest_framework import routers
+from marketapp.api_views import ProductViewSet, ClientViewSet
+
+router = routers.DefaultRouter()
+router.register(r'products',ProductViewSet)
+router.register(r'clients',ClientViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('marketapp.urls', namespace='market')),
-    path('users/',include('usersapp.urls',namespace='users'))
+    path('users/',include('usersapp.urls',namespace='users')),
+    path('api-auth/',include('rest_framework.urls')),
+    path('api/v0/',include(router.urls))
 ]
 if settings.DEBUG:
     import debug_toolbar
