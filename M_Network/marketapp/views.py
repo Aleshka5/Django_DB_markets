@@ -8,6 +8,7 @@ from .forms import RegForm, Form_buy, Form_change, Add_form, Form_profile
 from .models import Products, Markets_prods, Clients_prods, Markets, Clients_orders, Orders_prods
 from usersapp.models import Shopper, Profile
 from M_Network import settings
+from rest_framework.authtoken.models import Token
 # Create your views here.
 def main_view(request):
     market_prods = []
@@ -188,11 +189,11 @@ def market_orders(request):
 
 def profile_view(request):
     title = 'Профиль'
-    #user_info = Shopper.objects.get(id=request.user.id)
     address_info = Profile.objects.get(user_id=request.user.id)
+    token = Token.objects.get(user=request.user)
     if request.method=='GET':
         form = Form_profile()
-        return render(request, 'marketapp/profile_user.html', context={'title':title,'address':address_info.address,'form':form})
+        return render(request, 'marketapp/profile_user.html', context={'title':title,'address':address_info.address,'form':form,'token':token})
     else:
         form = Form_profile(request.POST)
         if form.is_valid():
@@ -211,4 +212,14 @@ def profile_view(request):
             return HttpResponseRedirect(reverse('market:profile'))
         else:
             print('FORM is invalid')
-            return render(request, 'marketapp/profile_user.html', context={'title':title,'user':user_info,'address':address_info.address,'form':form})
+            return render(request, 'marketapp/profile_user.html', context={'title':title,'address':address_info.address,'form':form,'token':token})
+
+def update_token(requests):
+    user = requests.user
+    token = Token.objects.get(user = user)
+    if token:
+        token.delete()
+        Token.objects.create(user=user)
+    else:
+        Token.objects.create(user=user)
+    return HttpResponseRedirect(reverse('market:profile'))

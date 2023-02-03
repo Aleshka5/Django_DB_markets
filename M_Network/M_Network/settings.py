@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'marketapp',
     'usersapp',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_cleanup.apps.CleanupConfig'
 ]
 
@@ -79,9 +80,9 @@ WSGI_APPLICATION = 'M_Network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 db_name = 'railway'
 db_user = 'postgres'
-db_pswrd = 'SOWI5pffo38wLo005vJu'
-db_host = 'containers-us-west-57.railway.app'
-db_port = '7405'
+db_pswrd = 'DkVhPXenoS2GEE66Lqpg'
+db_host = 'containers-us-west-166.railway.app'
+db_port = '7824'
 
 DATABASES = {
      'default': {
@@ -173,7 +174,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ]
 }
 

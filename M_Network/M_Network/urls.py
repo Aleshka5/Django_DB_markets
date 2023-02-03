@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from rest_framework import routers
-from marketapp.api_views import ProductViewSet, ClientViewSet
+from marketapp.api_views import ProductViewSet, ClientViewSet, MarketsProdsViewSet
 
 router = routers.DefaultRouter()
 router.register(r'products',ProductViewSet)
 router.register(r'clients',ClientViewSet)
+router.register(r'markets_prods',MarketsProdsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
